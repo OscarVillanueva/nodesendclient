@@ -43,7 +43,18 @@ const Link = ({ link }) => {
     return ( 
         <Layout>
 
-            <h1>Desde enlace</h1>
+            <h1 className="text-4xl text-center text-gray-700">
+                Descarga tu archivo
+            </h1>
+
+            <div className="flex items-center justify-center mt-10">
+                <a 
+                    href = {`${process.env.BACKEND_URL}/api/files/${link.file}`} 
+                    className = "bg-red-500 text-center px-10 py-3 rounded uppercase font-bold text-white cursor-pointer hover:bg-red-700"
+                >
+                    Aquí
+                </a>
+            </div>
 
         </Layout>
     );

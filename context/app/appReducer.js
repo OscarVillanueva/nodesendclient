@@ -5,7 +5,8 @@ import {
     UPLOAD_FILE_SUCCESS, 
     CREATE_LINK_FAIL, 
     CREATE_LINK_SUCESS,
-    START_SPINNER
+    START_SPINNER,
+    CLEAN_STATE
 } from "../../types";
 
 const reducer = ( state, action ) => {
@@ -43,6 +44,19 @@ const reducer = ( state, action ) => {
             return {
                 ...state,
                 url: action.payload
+            }
+
+        case CLEAN_STATE: 
+            return {
+                ...state,
+                fileMessage: null,
+                name: "",
+                fileName: "",
+                loadingFile: false,
+                downloads: 1,
+                password: "",
+                author: null,
+                url: ""
             }
 
         default: return state

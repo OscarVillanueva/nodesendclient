@@ -1,11 +1,19 @@
 import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from "next/router";
 import authContext from '../context/auth/authContext';
+import appContext from '../context/app/appContext';
 
 const Header = () => {
 
     // Extraer el usuario autenticado del storage
     const { user, whoiam, logOut } = useContext( authContext )
+
+    // Context de la app
+    const { cleanState } = useContext( appContext )
+
+    // Router
+    const router = useRouter()
 
     // Revisar si ya esta autenticado
     useEffect(() => {
@@ -14,17 +22,23 @@ const Header = () => {
         
     }, [])
 
+    const returnToHome = () => {
+        
+        router.push("/")
+        cleanState()
+
+    }
+
     return ( 
 
         <header className="py-8 flex flex-col md:flex-row items-center justify-between">
 
-            <Link href="/">
-                <img 
-                    className = "w-64 mb-8 md:mb-0"
-                    src="/logo.svg" 
-                    alt="logo"
-                />
-            </Link>
+            <img 
+                onClick = { returnToHome }
+                className = "w-64 mb-8 md:mb-0 cursor-pointer"
+                src="/logo.svg" 
+                alt="logo"
+            />
 
             <div>
                 { user 
