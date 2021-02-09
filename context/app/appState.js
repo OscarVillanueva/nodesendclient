@@ -10,7 +10,10 @@ import {
     CREATE_LINK_FAIL, 
     CREATE_LINK_SUCESS,
     START_SPINNER,
-    CLEAN_STATE
+    CLEAN_STATE,
+    SET_PASSWORD,
+    SET_AUTHOR,
+    SET_DOWNLOADS
 } from "../../types";
 
 const AppState = ({ children }) => {
@@ -82,6 +85,36 @@ const AppState = ({ children }) => {
 
     }
 
+    // Agregar el password
+    const setPassword = password => {
+        
+        dispatch({
+            type: SET_PASSWORD,
+            payload: password
+        })
+
+    }
+
+    // Agregar el número de descargas
+    const setDownloads = downloads => {
+
+        dispatch({
+            type: SET_DOWNLOADS,
+            payload: downloads
+        })
+
+    }
+
+    // Agregar el autor
+    const setAuthor = author => {
+
+        dispatch({
+            type: SET_AUTHOR,
+            payload: author
+        })
+
+    }
+
     // Función para crear un enlace una vez que se subió un archivo
     const createLink = async () => {
 
@@ -130,7 +163,10 @@ const AppState = ({ children }) => {
                 showAlert,
                 uploadFile,
                 createLink,
-                cleanState
+                cleanState,
+                setPassword,
+                setDownloads,
+                setAuthor
             }}
         >
             { children }

@@ -1,13 +1,28 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext, useCallback, useEffect } from 'react';
 import { useDropzone } from "react-dropzone";
-import client from '../config/axios';
 import Files from './Files';
 import appContext from '../context/app/appContext';
+import authContext from '../context/auth/authContext';
+import Form from "./Form"
 
 const Dropzone = () => {
     
     // Usamos el context de app
-    const { loadingFile, showAlert , uploadFile, createLink} = useContext( appContext )
+    const { loadingFile, showAlert , uploadFile, createLink, setAuthor } = useContext( appContext )
+
+    // Usamos el context de autenticación
+    const { authenticated, user } = useContext( authContext )
+
+    // Para agregar el autor al state
+    useEffect(() => {
+        
+        // Revisamos que tengamos un author o iniciada la sesión
+        if( user ) setAuthor( user.id )
+
+        // si no hay mandamos a null
+        else setAuthor( null )
+
+    }, [user])
 
     // Función que se ejecuta cuando se solto un archivo o lo que se vaya subiendo y cuando es aceptado
     const onDropAccepted = useCallback(async (acceptedFiles) => {
@@ -27,7 +42,7 @@ const Dropzone = () => {
     }
     
     // Extraer contenido de dropzone
-    const { isDragActive, acceptedFiles, getRootProps, getInputProps } = useDropzone({ onDropAccepted, onDropRejected, maxSize: 1000000})
+    const { isDragActive, acceptedFiles, getRootProps, getInputProps } = useDropzone({ onDropAccepted, onDropRejected, maxSize: user ? 1024 * 1024 * 10 : 1024 * 1024})
 
     return ( 
         <div className="md:flex-1 mb-3 mx-2 mt-16 lg:mt-0 flex flex-col items-center justify-center border-dashed border-gray-400 border-2 bg-gray-100">
@@ -43,6 +58,8 @@ const Dropzone = () => {
                         <Files 
                             acceptedFiles = { acceptedFiles }
                         />
+
+                        { authenticated && <Form />  }
 
                         { 
                             loadingFile 

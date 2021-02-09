@@ -6,7 +6,10 @@ import {
     CREATE_LINK_FAIL, 
     CREATE_LINK_SUCESS,
     START_SPINNER,
-    CLEAN_STATE
+    CLEAN_STATE,
+    SET_PASSWORD,
+    SET_AUTHOR,
+    SET_DOWNLOADS
 } from "../../types";
 
 const reducer = ( state, action ) => {
@@ -57,6 +60,24 @@ const reducer = ( state, action ) => {
                 password: "",
                 author: null,
                 url: ""
+            }
+
+        case SET_PASSWORD: 
+            return {
+                ...state,
+                password: action.payload
+            }
+
+        case SET_AUTHOR: 
+            return {
+                ...state,
+                author: action.payload
+            }
+
+        case SET_DOWNLOADS: 
+            return {
+                ...state,
+                downloads: action.payload
             }
 
         default: return state

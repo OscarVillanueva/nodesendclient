@@ -17,7 +17,7 @@ const Index = () => {
     // Revisar si ya esta autenticado
     useEffect(() => {
 
-        whoiam()
+       whoiam()
         
     }, [])
 
